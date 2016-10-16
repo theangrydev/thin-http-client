@@ -24,7 +24,7 @@
     <parent>
         <artifactId>thin-http-client</artifactId>
         <groupId>io.github.theangrydev.thinhttpclient</groupId>
-        <version>0.1.0</version>
+        <version>0.1.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>thin-http-client-core</artifactId>
