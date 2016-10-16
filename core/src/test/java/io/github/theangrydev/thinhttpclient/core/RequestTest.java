@@ -15,7 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.theangrydev.thinhttpclient.api;
+package io.github.theangrydev.thinhttpclient.core;
 
-public class Request {
+import org.assertj.core.api.WithAssertions;
+import org.junit.Test;
+
+public class RequestTest implements WithAssertions {
+
+    @Test
+    public void dummy() {
+        assertThat(Request.request("url").url).isEqualTo("url");
+    }
 }

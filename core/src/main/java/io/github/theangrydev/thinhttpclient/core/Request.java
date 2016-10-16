@@ -15,7 +15,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.theangrydev.thinhttpclient.apache;
+package io.github.theangrydev.thinhttpclient.core;
 
-public class ApacheHttpClient {
+public final class Request {
+
+    public final String url;
+
+    private Request(String url) {
+        this.url = url;
+    }
+
+    public static Request request(String url) {
+        return new Request(url);
+    }
 }
