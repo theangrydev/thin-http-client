@@ -15,21 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.theangrydev.thinhttpclient.core;
+package io.github.theangrydev.thinhttpclient.apache;
 
-public final class Request {
+import io.github.theangrydev.thinhttpclient.core.HttpClient;
+import io.github.theangrydev.thinhttpclient.core.Request;
+import io.github.theangrydev.thinhttpclient.core.Response;
 
-    public final String url;
-
-    private Request(String url) {
-        this.url = url;
-    }
-
-    public static Request request(String url) {
-        return new Request(url);
-    }
-
-    public void foo() {
-        throw new UnsupportedOperationException(url);
+public class ApacheHttpClient implements HttpClient {
+    @Override
+    public Response execute(Request request) {
+        return null;
     }
 }

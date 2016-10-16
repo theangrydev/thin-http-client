@@ -15,21 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.theangrydev.thinhttpclient.core;
+package acceptance;
 
-public final class Request {
+import io.github.theangrydev.thinhttpclient.core.Request;
+import org.assertj.core.api.WithAssertions;
+import org.junit.Test;
 
-    public final String url;
+public class DummyTest implements WithAssertions {
 
-    private Request(String url) {
-        this.url = url;
-    }
-
-    public static Request request(String url) {
-        return new Request(url);
-    }
-
-    public void foo() {
-        throw new UnsupportedOperationException(url);
+    @Test
+    public void dummy() {
+        assertThat(Request.request("url").url).isEqualTo("url");
     }
 }

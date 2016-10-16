@@ -17,19 +17,6 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
-public final class Request {
-
-    public final String url;
-
-    private Request(String url) {
-        this.url = url;
-    }
-
-    public static Request request(String url) {
-        return new Request(url);
-    }
-
-    public void foo() {
-        throw new UnsupportedOperationException(url);
-    }
+public interface HttpClient {
+    Response execute(Request request);
 }

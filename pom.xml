@@ -28,6 +28,7 @@
 
     <modules>
         <module>core</module>
+        <module>apache</module>
     </modules>
 
     <name>thin-http-client</name>
