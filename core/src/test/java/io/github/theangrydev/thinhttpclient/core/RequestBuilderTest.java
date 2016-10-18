@@ -20,10 +20,15 @@ package io.github.theangrydev.thinhttpclient.core;
 import org.assertj.core.api.WithAssertions;
 import org.junit.Test;
 
-public class RequestTest implements WithAssertions {
+import static io.github.theangrydev.thinhttpclient.core.Method.GET;
+import static io.github.theangrydev.thinhttpclient.core.RequestBuilder.get;
+
+public class RequestBuilderTest implements WithAssertions {
 
     @Test
-    public void dummy() {
-        assertThat(Request.request("url").url).isEqualTo("url");
+    public void getMethod() {
+        Request request = get().build();
+
+        assertThat(request.method).isEqualTo(GET);
     }
 }

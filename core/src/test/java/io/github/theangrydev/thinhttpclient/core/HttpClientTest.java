@@ -15,16 +15,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package acceptance;
+package io.github.theangrydev.thinhttpclient.core;
 
-import io.github.theangrydev.thinhttpclient.core.Request;
 import org.assertj.core.api.WithAssertions;
 import org.junit.Test;
 
-public class DummyTest implements WithAssertions {
+/**
+ * Implementations of {@link HttpClient} should extend this class to test that they satisfy the general contract.
+ */
+public abstract class HttpClientTest implements WithAssertions {
+    private final HttpClient httpClient;
+
+    protected HttpClientTest(HttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
 
     @Test
     public void dummy() {
-        assertThat(Request.request("url").url).isEqualTo("url");
+        assertThat(httpClient).isNotNull();
     }
 }

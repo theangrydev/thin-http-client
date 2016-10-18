@@ -17,6 +17,13 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
-public interface HttpClient {
-    Response execute(Request request);
+import java.io.Closeable;
+import java.io.IOException;
+
+public interface HttpClient extends Closeable {
+    Response execute(Request request) throws IOException;
+
+    default Response execute(RequestBuilder requestBuilder) throws IOException {
+        return execute(requestBuilder.build());
+    }
 }

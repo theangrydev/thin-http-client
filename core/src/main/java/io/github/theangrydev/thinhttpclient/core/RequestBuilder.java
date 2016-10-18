@@ -19,13 +19,24 @@ package io.github.theangrydev.thinhttpclient.core;
 
 import java.net.URI;
 
-public final class Request {
+import static io.github.theangrydev.thinhttpclient.core.Method.GET;
 
-    public final URI uri;
-    public final Method method;
+public class RequestBuilder {
 
-    Request(URI uri, Method method) {
-        this.uri = uri;
+    private URI uri;
+    private Method method;
+
+    public static RequestBuilder get() {
+        return new RequestBuilder().method(GET);
+    }
+
+    public RequestBuilder method(Method method) {
         this.method = method;
+        return this;
+    }
+
+    public Request build() {
+        // TODO: check fields are not null
+        return new Request(uri, method);
     }
 }

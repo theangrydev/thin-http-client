@@ -18,4 +18,9 @@
 package io.github.theangrydev.thinhttpclient.core;
 
 public class Response {
+    public final String body;
+
+    public Response(String body) {
+        this.body = body;
+    }
 }

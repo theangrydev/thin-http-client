@@ -17,15 +17,11 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
-import java.net.URI;
-
-public final class Request {
-
-    public final URI uri;
-    public final Method method;
-
-    Request(URI uri, Method method) {
-        this.uri = uri;
-        this.method = method;
-    }
+public enum Method {
+    GET,
+    POST,
+    OPTIONS,
+    HEAD,
+    TRACE,
+    DELETE
 }

@@ -33,6 +33,7 @@
     </properties>
 
     <dependencies>
+        <!-- Compile dependencies -->
         <dependency>
             <groupId>io.github.theangrydev.thinhttpclient</groupId>
             <artifactId>thin-http-client-core</artifactId>
@@ -42,6 +43,15 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>${apache.httpclient.version}</version>
+        </dependency>
+
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>io.github.theangrydev.thinhttpclient</groupId>
+            <artifactId>thin-http-client-core</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
