@@ -22,13 +22,15 @@ import io.github.theangrydev.thinhttpclient.core.Method;
 import io.github.theangrydev.thinhttpclient.core.Request;
 import io.github.theangrydev.thinhttpclient.core.Response;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -46,7 +48,7 @@ public class ApacheHttpClient implements HttpClient {
 
     @Override
     public Response execute(Request request) throws IOException {
-        HttpRequest apacheRequest = new HttpRequest(request.uri, request.method);
+        HttpRequest apacheRequest = new HttpRequest(request.url, request.method, request.body);
         try (CloseableHttpResponse apacheResponse = httpClient.execute(apacheRequest)) {
             String body = EntityUtils.toString(apacheResponse.getEntity(), UTF_8);
             return new Response(body);
@@ -58,13 +60,14 @@ public class ApacheHttpClient implements HttpClient {
         httpClient.close();
     }
 
-    private static final class HttpRequest extends HttpRequestBase {
+    private static final class HttpRequest extends HttpEntityEnclosingRequestBase {
 
         private final Method method;
 
-        HttpRequest(URI uri, Method method) {
+        HttpRequest(URL url, Method method, String body) {
             this.method = method;
-            setURI(uri);
+            setURI(URI.create(url.toExternalForm()));
+            setEntity(new StringEntity(body, UTF_8));
         }
 
         @Override
