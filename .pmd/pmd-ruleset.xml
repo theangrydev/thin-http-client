@@ -47,6 +47,7 @@
         <exclude name="LongVariable"/><!-- There is nothing wrong with long descriptive variable names! -->
         <exclude name="GenericsNaming"/><!-- Single letter generic names are not descriptive enough, especially if there are several of them -->
         <exclude name="AbstractNaming"/><!-- Abstract classes should be called something descriptive, not just AbstractXXX -->
+        <exclude name="AvoidFieldNameMatchingMethodName"/><!-- This is helpful for keeping builder method names the same as the backing fields -->
     </rule>
     <rule ref="rulesets/java/optimizations.xml">
         <exclude name="MethodArgumentCouldBeFinal"/><!-- Final method arguments are not a way to improve performance since the final keyword does not end up in the class file -->

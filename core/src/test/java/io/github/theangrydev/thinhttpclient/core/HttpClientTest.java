@@ -22,6 +22,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static io.github.theangrydev.thinhttpclient.core.Request.get;
+
 /**
  * Implementations of {@link HttpClient} should extend this class to test that they satisfy the general contract.
  */
@@ -34,7 +36,7 @@ public abstract class HttpClientTest implements WithAssertions {
 
     @Test
     public void dummy() throws IOException {
-        Response execute = httpClient.execute(RequestBuilder.get().url("http://google.com/"));
+        Response execute = httpClient.execute(get().url("http://google.com/"));
         System.out.println("execute = " + execute);
     }
 }

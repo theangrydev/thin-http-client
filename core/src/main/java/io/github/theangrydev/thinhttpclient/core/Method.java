@@ -17,12 +17,56 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
+/**
+ * This enumerates the possible HTTP/1.1 Method tokens according to RFC 2616 and RFC 5789.
+ *
+ * @see <a href="https://tools.ietf.org/html/rfc2616#section-5.1.1">RFC 2616 HTTP/1.1 5.1.1 Method</a>
+ * @see <a href="https://tools.ietf.org/html/rfc5789">RFC 5789 PATCH Method for HTTP</a>
+ */
 public enum Method {
-    GET,
-    POST,
-    PATCH,
+
+    /**
+     * @see <a href="https://tools.ietf.org/html/rfc2616#section-9.2">RFC 2616 HTTP/1.1 9.2 OPTIONS</a>
+     */
     OPTIONS,
+
+    /**
+     * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.3">RFC 2616 HTTP/1.1 9.3 GET</a>
+     */
+    GET,
+
+    /**
+     * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.4">RFC 2616 HTTP/1.1 9.4 HEAD</a>
+     */
     HEAD,
+
+    /**
+     * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.5">RFC 2616 HTTP/1.1 9.5 POST</a>
+     */
+    POST,
+
+    /**
+     * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.6">RFC 2616 HTTP/1.1 9.6 PUT</a>
+     */
+    PUT,
+
+    /**
+     * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.7">RFC 2616 HTTP/1.1 9.7 DELETE</a>
+     */
+    DELETE,
+
+    /**
+     * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.8">RFC 2616 HTTP/1.1 9.8 TRACE</a>
+     */
     TRACE,
-    DELETE
+
+    /**
+     * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.9">RFC 2616 HTTP/1.1 9.9 CONNECT</a>
+     */
+    CONNECT,
+
+    /**
+     * @see <a href="https://tools.ietf.org/html/rfc5789">RFC 5789 PATCH Method for HTTP</a>
+     */
+    PATCH
 }

@@ -21,7 +21,7 @@ import org.assertj.core.api.WithAssertions;
 import org.junit.Test;
 
 import static io.github.theangrydev.thinhttpclient.core.Method.GET;
-import static io.github.theangrydev.thinhttpclient.core.RequestBuilder.get;
+import static io.github.theangrydev.thinhttpclient.core.Request.get;
 
 public class RequestBuilderTest implements WithAssertions {
 

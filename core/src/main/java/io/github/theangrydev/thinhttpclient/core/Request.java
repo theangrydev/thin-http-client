@@ -17,19 +17,81 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+
+import static io.github.theangrydev.thinhttpclient.core.Method.GET;
+import static java.lang.String.format;
 
 public final class Request {
 
-    public final URL url;
+    public final URI uri;
     public final Method method;
 
-    Request(URL url, Method method) {
-        this.url = url;
+    private Request(URI uri, Method method) {
+        this.uri = uri;
         this.method = method;
     }
 
+    private static Request request(URI uri, Method method) {
+        return new Request(uri, method);
+    }
+
+    public static RequestBuilder builder() {
+        return new RequestBuilder();
+    }
+
+    public static RequestBuilder get() {
+        return new RequestBuilder().method(GET);
+    }
+
     public RequestBuilder modify() {
-        return new RequestBuilder().method(method).url(url);
+        return new RequestBuilder().method(method).uri(uri);
+    }
+
+    public static class RequestBuilder {
+
+        private URI uri;
+        private Method method;
+
+        public RequestBuilder method(Method method) {
+            this.method = method;
+            return this;
+        }
+
+        public RequestBuilder uri(URI uri) {
+            this.uri = uri;
+            return this;
+        }
+
+        public RequestBuilder url(URL url) {
+            try {
+                return uri(url.toURI());
+            } catch (URISyntaxException exception) {
+                throw new IllegalArgumentException(exception.getMessage(), exception);
+            }
+        }
+
+        public RequestBuilder url(String url) {
+            try {
+                return url(new URL(url));
+            } catch (MalformedURLException exception) {
+                throw new IllegalArgumentException(exception.getMessage(), exception);
+            }
+        }
+
+        public Request build() {
+            checkFieldWasSet(uri, "URI");
+            checkFieldWasSet(method, "Method");
+            return request(uri, method);
+        }
+
+        private static void checkFieldWasSet(Object field, String fieldName) {
+            if (field == null) {
+                throw new IllegalStateException(format("%s was not set!", fieldName));
+            }
+        }
     }
 }

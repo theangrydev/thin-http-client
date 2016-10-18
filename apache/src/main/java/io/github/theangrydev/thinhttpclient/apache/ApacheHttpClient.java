@@ -29,7 +29,6 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -47,7 +46,7 @@ public class ApacheHttpClient implements HttpClient {
 
     @Override
     public Response execute(Request request) throws IOException {
-        HttpRequest apacheRequest = new HttpRequest(request.url, request.method);
+        HttpRequest apacheRequest = new HttpRequest(request.uri, request.method);
         try (CloseableHttpResponse apacheResponse = httpClient.execute(apacheRequest)) {
             String body = EntityUtils.toString(apacheResponse.getEntity(), UTF_8);
             return new Response(body);
@@ -63,9 +62,9 @@ public class ApacheHttpClient implements HttpClient {
 
         private final Method method;
 
-        HttpRequest(URL url, Method method) {
+        HttpRequest(URI uri, Method method) {
             this.method = method;
-            setURI(URI.create(url.toExternalForm()));
+            setURI(uri);
         }
 
         @Override
