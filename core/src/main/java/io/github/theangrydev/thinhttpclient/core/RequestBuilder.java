@@ -35,6 +35,11 @@ public class RequestBuilder {
         return this;
     }
 
+    public RequestBuilder uri(URI uri) {
+        this.uri = uri;
+        return this;
+    }
+
     public Request build() {
         // TODO: check fields are not null
         return new Request(uri, method);

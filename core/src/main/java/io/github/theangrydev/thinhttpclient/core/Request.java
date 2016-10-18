@@ -28,4 +28,8 @@ public final class Request {
         this.uri = uri;
         this.method = method;
     }
+
+    public RequestBuilder modify() {
+        return new RequestBuilder().method(method).uri(uri);
+    }
 }
