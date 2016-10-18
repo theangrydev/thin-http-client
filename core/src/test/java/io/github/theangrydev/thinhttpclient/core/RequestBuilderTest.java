@@ -25,9 +25,11 @@ import static io.github.theangrydev.thinhttpclient.core.RequestBuilder.get;
 
 public class RequestBuilderTest implements WithAssertions {
 
+    private static final String SOME_URL = "http://www.blah.com";
+
     @Test
     public void getMethod() {
-        Request request = get().build();
+        Request request = get().url(SOME_URL).build();
 
         assertThat(request.method).isEqualTo(GET);
     }

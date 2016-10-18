@@ -17,12 +17,15 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import static io.github.theangrydev.thinhttpclient.core.Method.GET;
 import static java.lang.String.format;
 
 public class RequestBuilder {
 
-    private String url;
+    private URL url;
     private Method method;
 
     public static RequestBuilder get() {
@@ -34,9 +37,17 @@ public class RequestBuilder {
         return this;
     }
 
-    public RequestBuilder url(String url) {
+    public RequestBuilder url(URL url) {
         this.url = url;
         return this;
+    }
+
+    public RequestBuilder url(String url) {
+        try {
+            return url(new URL(url));
+        } catch (MalformedURLException malformedURLException) {
+            throw new IllegalArgumentException(malformedURLException.getMessage(), malformedURLException);
+        }
     }
 
     public Request build() {

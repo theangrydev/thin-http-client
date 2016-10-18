@@ -20,6 +20,7 @@ package io.github.theangrydev.thinhttpclient.core;
 public enum Method {
     GET,
     POST,
+    PATCH,
     OPTIONS,
     HEAD,
     TRACE,

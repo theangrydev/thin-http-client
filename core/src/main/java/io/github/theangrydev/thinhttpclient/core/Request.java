@@ -17,12 +17,14 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
+import java.net.URL;
+
 public final class Request {
 
-    public final String url;
+    public final URL url;
     public final Method method;
 
-    Request(String url, Method method) {
+    Request(URL url, Method method) {
         this.url = url;
         this.method = method;
     }

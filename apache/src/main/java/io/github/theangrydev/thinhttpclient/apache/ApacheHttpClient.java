@@ -29,6 +29,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -62,9 +63,9 @@ public class ApacheHttpClient implements HttpClient {
 
         private final Method method;
 
-        HttpRequest(String url, Method method) {
+        HttpRequest(URL url, Method method) {
             this.method = method;
-            setURI(URI.create(url));
+            setURI(URI.create(url.toExternalForm()));
         }
 
         @Override
