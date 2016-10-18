@@ -46,7 +46,7 @@ public class ApacheHttpClient implements HttpClient {
 
     @Override
     public Response execute(Request request) throws IOException {
-        HttpRequest apacheRequest = new HttpRequest(request.uri, request.method);
+        HttpRequest apacheRequest = new HttpRequest(request.url, request.method);
         try (CloseableHttpResponse apacheResponse = httpClient.execute(apacheRequest)) {
             String body = EntityUtils.toString(apacheResponse.getEntity(), UTF_8);
             return new Response(body);
@@ -62,9 +62,9 @@ public class ApacheHttpClient implements HttpClient {
 
         private final Method method;
 
-        HttpRequest(URI uri, Method method) {
+        HttpRequest(String url, Method method) {
             this.method = method;
-            setURI(uri);
+            setURI(URI.create(url));
         }
 
         @Override

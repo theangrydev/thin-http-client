@@ -17,19 +17,17 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
-import java.net.URI;
-
 public final class Request {
 
-    public final URI uri;
+    public final String url;
     public final Method method;
 
-    Request(URI uri, Method method) {
-        this.uri = uri;
+    Request(String url, Method method) {
+        this.url = url;
         this.method = method;
     }
 
     public RequestBuilder modify() {
-        return new RequestBuilder().method(method).uri(uri);
+        return new RequestBuilder().method(method).url(url);
     }
 }

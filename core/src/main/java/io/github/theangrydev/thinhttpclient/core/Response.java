@@ -23,4 +23,9 @@ public class Response {
     public Response(String body) {
         this.body = body;
     }
+
+    @Override
+    public String toString() {
+        return body;
+    }
 }

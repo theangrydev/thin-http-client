@@ -17,13 +17,12 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
-import java.net.URI;
-
 import static io.github.theangrydev.thinhttpclient.core.Method.GET;
+import static java.lang.String.format;
 
 public class RequestBuilder {
 
-    private URI uri;
+    private String url;
     private Method method;
 
     public static RequestBuilder get() {
@@ -35,13 +34,20 @@ public class RequestBuilder {
         return this;
     }
 
-    public RequestBuilder uri(URI uri) {
-        this.uri = uri;
+    public RequestBuilder url(String url) {
+        this.url = url;
         return this;
     }
 
     public Request build() {
-        // TODO: check fields are not null
-        return new Request(uri, method);
+        checkFieldWasSet(url, "URL");
+        checkFieldWasSet(method, "Method");
+        return new Request(url, method);
+    }
+
+    private void checkFieldWasSet(Object field, String fieldName) {
+        if (field == null) {
+            throw new IllegalStateException(format("%s was not set!", fieldName));
+        }
     }
 }
