@@ -1,6 +1,6 @@
 package io.github.theangrydev.thinhttpclient.apache;
 
-import io.github.theangrydev.thinhttpclient.core.HttpClientTest;
+import acceptance.HttpClientTest;
 
 import static io.github.theangrydev.thinhttpclient.apache.ApacheHttpClient.apacheHttpClient;
 

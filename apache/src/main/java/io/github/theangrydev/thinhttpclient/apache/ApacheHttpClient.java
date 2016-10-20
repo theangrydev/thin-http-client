@@ -17,10 +17,8 @@
  */
 package io.github.theangrydev.thinhttpclient.apache;
 
-import io.github.theangrydev.thinhttpclient.core.HttpClient;
-import io.github.theangrydev.thinhttpclient.core.Method;
-import io.github.theangrydev.thinhttpclient.core.Request;
-import io.github.theangrydev.thinhttpclient.core.Response;
+import io.github.theangrydev.thinhttpclient.core.*;
+import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.entity.StringEntity;
@@ -32,13 +30,17 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 
+import static io.github.theangrydev.thinhttpclient.core.Headers.headers;
+import static io.github.theangrydev.thinhttpclient.core.Response.response;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.*;
 
 public class ApacheHttpClient implements HttpClient {
 
     private final CloseableHttpClient httpClient;
 
-    public ApacheHttpClient(CloseableHttpClient httpClient) {
+    private ApacheHttpClient(CloseableHttpClient httpClient) {
         this.httpClient = httpClient;
     }
 
@@ -50,14 +52,38 @@ public class ApacheHttpClient implements HttpClient {
     public Response execute(Request request) throws IOException {
         HttpRequest apacheRequest = new HttpRequest(request.url, request.method, request.body);
         try (CloseableHttpResponse apacheResponse = httpClient.execute(apacheRequest)) {
-            String body = EntityUtils.toString(apacheResponse.getEntity(), UTF_8);
-            return new Response(body);
+            return adaptResponse(apacheResponse);
         }
     }
 
     @Override
     public void close() throws IOException {
         httpClient.close();
+    }
+
+    private Response adaptResponse(CloseableHttpResponse apacheResponse) throws IOException {
+        StatusLine statusLine = apacheResponse.getStatusLine();
+        return response(adaptHeaders(apacheResponse), statusLine.getStatusCode(), adaptBody(apacheResponse));
+    }
+
+    private String adaptBody(CloseableHttpResponse apacheResponse) throws IOException {
+        return EntityUtils.toString(apacheResponse.getEntity(), UTF_8);
+    }
+
+    private Headers adaptHeaders(CloseableHttpResponse apacheResponse) {
+        return headers(stream(apacheResponse.getAllHeaders()).map(this::adaptHeader).collect(toList()));
+    }
+
+    private Header adaptHeader(org.apache.http.Header header) {
+        return Header.header(header.getName(), adaptHeaderValue(header.getValue()));
+    }
+
+    private String adaptHeaderValue(String value) {
+        if (value == null) {
+            return "";
+        } else {
+            return value;
+        }
     }
 
     private static final class HttpRequest extends HttpEntityEnclosingRequestBase {
