@@ -133,7 +133,14 @@ public class RequestBuilder {
         checkFieldWasSet(url, "URI");
         checkFieldWasSet(method, "Method");
         checkFieldWasSet(body, "Body");
+        checkBodyIsEmptyForMethodsWithNoBody();
         return Request.request(url, method, body, headers(headers));
+    }
+
+    private void checkBodyIsEmptyForMethodsWithNoBody() {
+        if (!method.hasBody && !body.isEmpty()) {
+            throw new IllegalStateException(format("Method '%s' should not have a body!", method));
+        }
     }
 
     private static void checkFieldWasSet(Object field, String fieldName) {
