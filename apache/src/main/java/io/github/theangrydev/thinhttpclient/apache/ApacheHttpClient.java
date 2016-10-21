@@ -18,6 +18,7 @@
 package io.github.theangrydev.thinhttpclient.apache;
 
 import io.github.theangrydev.thinhttpclient.core.*;
+import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
@@ -80,7 +81,12 @@ public class ApacheHttpClient implements HttpClient {
     }
 
     private String adaptBody(CloseableHttpResponse apacheResponse) throws IOException {
-        return EntityUtils.toString(apacheResponse.getEntity(), UTF_8);
+        HttpEntity entity = apacheResponse.getEntity();
+        if (entity == null) {
+            return "";
+        } else {
+            return EntityUtils.toString(entity, UTF_8);
+        }
     }
 
     private Headers adaptHeaders(CloseableHttpResponse apacheResponse) {

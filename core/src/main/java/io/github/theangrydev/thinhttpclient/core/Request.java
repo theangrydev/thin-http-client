@@ -70,7 +70,7 @@ public final class Request {
      * and the {@link #body} set to the empty {@link String}.
      */
     public static RequestBuilder get() {
-        return new RequestBuilder().method(GET).noBody();
+        return new RequestBuilder().method(GET);
     }
 
     public static RequestBuilder post() {

@@ -51,6 +51,9 @@ public class RequestBuilder {
      */
     public RequestBuilder method(Method method) {
         this.method = method;
+        if (!method.hasBody) {
+            return noBody();
+        }
         return this;
     }
 

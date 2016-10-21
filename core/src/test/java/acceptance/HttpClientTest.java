@@ -19,6 +19,9 @@ package acceptance;
 
 import com.github.tomakehurst.wiremock.core.Options;
 import com.github.tomakehurst.wiremock.junit.WireMockClassRule;
+import com.googlecode.yatspec.junit.Row;
+import com.googlecode.yatspec.junit.Table;
+import com.googlecode.yatspec.junit.TableRunner;
 import com.googlecode.yatspec.state.givenwhenthen.TestState;
 import io.github.theangrydev.thinhttpclient.core.HttpClient;
 import io.github.theangrydev.thinhttpclient.core.Request;
@@ -27,17 +30,22 @@ import org.assertj.core.api.WithAssertions;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static com.github.tomakehurst.wiremock.http.RequestMethod.fromString;
+import static com.github.tomakehurst.wiremock.matching.RequestPatternBuilder.newRequestPattern;
 import static io.github.theangrydev.thinhttpclient.core.MediaType.APPLICATION_XML;
+import static io.github.theangrydev.thinhttpclient.core.Method.method;
 import static java.nio.charset.StandardCharsets.UTF_16;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * Implementations of {@link HttpClient} should extend this class to test that they satisfy the general contract.
  */
+@RunWith(TableRunner.class)
 public abstract class HttpClientTest extends TestState implements WithAssertions {
     private final HttpClient httpClient;
 
@@ -49,6 +57,22 @@ public abstract class HttpClientTest extends TestState implements WithAssertions
 
     protected HttpClientTest(HttpClient httpClient) {
         this.httpClient = httpClient;
+    }
+
+    @Table({
+        @Row("GET"),
+        @Row("HEAD"),
+        @Row("DELETE"),
+        @Row("TRACE"),
+        @Row("CONNECT")
+    })
+    @Test
+    public void methodsWithoutBodyDoNotSpecifyContentLength(String methodName) throws IOException {
+        httpClient.execute(Request.builder().method(method(methodName)).noBody().url(baseUrl() + "/test"));
+
+        verify(newRequestPattern(fromString(methodName), urlPathEqualTo("/test"))
+                .withRequestBody(equalTo(""))
+                .withoutHeader("Content-Length"));
     }
 
     /**
