@@ -17,6 +17,7 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.assertj.core.api.WithAssertions;
 import org.junit.Test;
 
@@ -27,5 +28,10 @@ public class HeaderTest implements WithAssertions {
     @Test
     public void toStringIsNameColonValue() {
         assertThat(header("name", "value")).hasToString("name: value");
+    }
+
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.forClass(Header.class).verify();
     }
 }

@@ -325,12 +325,9 @@
                         <configuration>
                             <rules>
                                 <requireFilesDontExist>
-                                    <message>There are cycles. See the report at ${project.build.directory}/highwheel/index.html</message>
+                                    <message>There are package cycles. See the report at ${project.build.directory}/highwheel/index.html</message>
                                     <files>
-                                        <file>${project.build.directory}/highwheel/package_tangle_0.html</file>
                                         <file>${project.build.directory}/highwheel/package_tangle_1.html</file>
-                                        <file>${project.build.directory}/highwheel/class_tangle_0.html</file>
-                                        <file>${project.build.directory}/highwheel/class_tangle_1.html</file>
                                     </files>
                                 </requireFilesDontExist>
                             </rules>

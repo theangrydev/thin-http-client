@@ -21,6 +21,7 @@ import java.util.Objects;
 
 public final class MediaType {
     public static final MediaType APPLICATION_XML = MediaType.mediaType("application/xml");
+    public static final MediaType APPLICATION_JSON = MediaType.mediaType("application/json");
 
     private final String name;
 

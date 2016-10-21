@@ -31,7 +31,6 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static io.github.theangrydev.thinhttpclient.core.ContentType.contentType;
 import static io.github.theangrydev.thinhttpclient.core.MediaType.APPLICATION_XML;
 import static java.nio.charset.StandardCharsets.UTF_16;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -71,7 +70,7 @@ public abstract class HttpClientTest extends TestState implements WithAssertions
     public void requestBody() throws IOException {
         String expectedBody = "<something>wow</something>";
         httpClient.execute(Request.post().url(baseUrl() + "/test")
-                .body(expectedBody, contentType(APPLICATION_XML, UTF_8)));
+                .body(expectedBody, APPLICATION_XML, UTF_8));
 
         verify(postRequestedFor(urlPathEqualTo("/test"))
                 .withRequestBody(equalTo(expectedBody))
@@ -86,7 +85,7 @@ public abstract class HttpClientTest extends TestState implements WithAssertions
     public void requestBodyUtf16() throws IOException {
         String expectedBody = "<something>wow</something>";
         httpClient.execute(Request.post().url(baseUrl() + "/test")
-                .body(expectedBody, contentType(APPLICATION_XML, UTF_16)));
+                .body(expectedBody, APPLICATION_XML, UTF_16));
 
         verify(postRequestedFor(urlPathEqualTo("/test"))
                 .withRequestBody(equalTo("��\u0000<\u0000s\u0000o\u0000m\u0000e\u0000t\u0000h\u0000i\u0000n\u0000g\u0000>\u0000w\u0000o\u0000w\u0000<\u0000/\u0000s\u0000o\u0000m\u0000e\u0000t\u0000h\u0000i\u0000n\u0000g\u0000>"))

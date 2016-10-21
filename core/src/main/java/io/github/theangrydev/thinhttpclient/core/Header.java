@@ -17,6 +17,8 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
+import java.util.Objects;
+
 public final class Header {
     public final String name;
     public final String value;
@@ -33,5 +35,23 @@ public final class Header {
     @Override
     public String toString() {
         return name + ": " + value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || getClass() != other.getClass()) {
+            return false;
+        }
+        Header header = (Header) other;
+        return Objects.equals(name, header.name) &&
+                Objects.equals(value, header.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, value);
     }
 }

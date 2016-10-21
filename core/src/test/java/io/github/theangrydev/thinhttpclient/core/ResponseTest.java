@@ -20,19 +20,18 @@ package io.github.theangrydev.thinhttpclient.core;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Test;
 
-import java.nio.charset.Charset;
+import static io.github.theangrydev.thinhttpclient.core.Header.header;
+import static io.github.theangrydev.thinhttpclient.core.Headers.headers;
 
-import static io.github.theangrydev.thinhttpclient.core.MediaType.mediaType;
-import static java.nio.charset.StandardCharsets.UTF_16;
-import static java.nio.charset.StandardCharsets.UTF_8;
+public class ResponseTest {
 
-public class ContentTypeTest {
+    private static final Headers HEADERS_1 = headers(header("a", "1"));
+    private static final Headers HEADERS_2 = headers(header("b", "2"));
 
     @Test
     public void equalsContract() {
-        EqualsVerifier.forClass(ContentType.class)
-            .withPrefabValues(MediaType.class, mediaType("red"), mediaType("black"))
-            .withPrefabValues(Charset.class, UTF_8, UTF_16)
-            .verify();
+        EqualsVerifier.forClass(Response.class)
+                .withPrefabValues(Headers.class, HEADERS_1, HEADERS_2)
+                .verify();
     }
 }
