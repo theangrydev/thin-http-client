@@ -17,6 +17,15 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
+/**
+ * Some of the HTTP header field names that thin-http-client knows about.
+ *
+ * @see <a href="https://tools.ietf.org/html/rfc2616#section-4.2">RFC 2616 HTTP/1.1 4.2 Message Headers</a>
+ */
 public class HeaderName {
+
+    /**
+     * @see <a href="https://tools.ietf.org/html/rfc2616#section-14.17">RFC 2616 HTTP/1.1 14.17 Content-Type</a>
+     */
     public static final String CONTENT_TYPE = "Content-Type";
 }
