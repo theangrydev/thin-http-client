@@ -17,21 +17,40 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
-public final class Header {
-    public final String name;
-    public final String value;
+import java.util.Objects;
 
-    private Header(String name, String value) {
+public final class MediaType {
+    public static final MediaType APPLICATION_XML = MediaType.mediaType("application/xml");
+
+    private final String name;
+
+    private MediaType(String name) {
         this.name = name;
-        this.value = value;
     }
 
-    public static Header header(String name, String value) {
-        return new Header(name, value);
+    public static MediaType mediaType(String name) {
+        return new MediaType(name);
     }
 
     @Override
     public String toString() {
-        return name + ": " + value;
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || getClass() != other.getClass()) {
+            return false;
+        }
+        MediaType mediaType = (MediaType) other;
+        return Objects.equals(name, mediaType.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

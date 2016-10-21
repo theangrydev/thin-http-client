@@ -17,33 +17,22 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
-import java.util.List;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import org.junit.Test;
 
-public final class Response {
-    private final Headers headers;
-    public final int status;
-    public final String body;
+import java.nio.charset.Charset;
 
-    private Response(Headers headers, int status, String body) {
-        this.headers = headers;
-        this.status = status;
-        this.body = body;
-    }
+import static io.github.theangrydev.thinhttpclient.core.MediaType.mediaType;
+import static java.nio.charset.StandardCharsets.UTF_16;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
-    public static Response response(Headers headers, int status, String body) {
-        return new Response(headers, status, body);
-    }
+public class ContentTypeTest {
 
-    public String header(String name) {
-        return headers.value(name);
-    }
-
-    public List<String> headerValues(String name) {
-        return headers.values(name);
-    }
-
-    @Override
-    public String toString() {
-        return body;
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.forClass(ContentType.class)
+            .withPrefabValues(MediaType.class, mediaType("red"), mediaType("black"))
+            .withPrefabValues(Charset.class, UTF_8, UTF_16)
+            .verify();
     }
 }

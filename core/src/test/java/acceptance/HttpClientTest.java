@@ -31,6 +31,10 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static io.github.theangrydev.thinhttpclient.core.ContentType.contentType;
+import static io.github.theangrydev.thinhttpclient.core.MediaType.APPLICATION_XML;
+import static java.nio.charset.StandardCharsets.UTF_16;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * Implementations of {@link HttpClient} should extend this class to test that they satisfy the general contract.
@@ -49,7 +53,48 @@ public abstract class HttpClientTest extends TestState implements WithAssertions
     }
 
     /**
-     *
+     * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.3">RFC 2616 HTTP/1.1 9.3 GET</a>
+     */
+    @Test
+    public void getRequest() throws IOException {
+        httpClient.execute(Request.get().url(baseUrl() + "/test"));
+
+        verify(getRequestedFor(urlPathEqualTo("/test"))
+                .withRequestBody(equalTo(""))
+                .withHeader("Content-Length", equalTo("0")));
+    }
+
+    /**
+     * @see <a href="https://tools.ietf.org/html/rfc2616#section-7.2">RFC 2616 HTTP/1.1 7.2 Entity Body</a>
+     */
+    @Test
+    public void requestBody() throws IOException {
+        String expectedBody = "<something>wow</something>";
+        httpClient.execute(Request.post().url(baseUrl() + "/test")
+                .body(expectedBody, contentType(APPLICATION_XML, UTF_8)));
+
+        verify(postRequestedFor(urlPathEqualTo("/test"))
+                .withRequestBody(equalTo(expectedBody))
+                .withHeader("Content-Length", equalTo("26"))
+                .withHeader("Content-Type", equalTo("application/xml; charset=UTF-8")));
+    }
+
+    /**
+     * @see <a href="https://tools.ietf.org/html/rfc2616#section-7.2">RFC 2616 HTTP/1.1 7.2 Entity Body</a>
+     */
+    @Test
+    public void requestBodyUtf16() throws IOException {
+        String expectedBody = "<something>wow</something>";
+        httpClient.execute(Request.post().url(baseUrl() + "/test")
+                .body(expectedBody, contentType(APPLICATION_XML, UTF_16)));
+
+        verify(postRequestedFor(urlPathEqualTo("/test"))
+                .withRequestBody(equalTo("��\u0000<\u0000s\u0000o\u0000m\u0000e\u0000t\u0000h\u0000i\u0000n\u0000g\u0000>\u0000w\u0000o\u0000w\u0000<\u0000/\u0000s\u0000o\u0000m\u0000e\u0000t\u0000h\u0000i\u0000n\u0000g\u0000>"))
+                .withHeader("Content-Length", equalTo("54"))
+                .withHeader("Content-Type", equalTo("application/xml; charset=UTF-16")));
+    }
+
+    /**
      * @see <a href="https://tools.ietf.org/html/rfc2616#section-7.2">RFC 2616 HTTP/1.1 7.2 Entity Body</a>
      */
     @Test

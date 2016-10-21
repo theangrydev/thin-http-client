@@ -21,6 +21,7 @@ import io.github.theangrydev.thinhttpclient.core.*;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -30,11 +31,12 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 
+import static io.github.theangrydev.thinhttpclient.core.HeaderName.CONTENT_TYPE;
 import static io.github.theangrydev.thinhttpclient.core.Headers.headers;
 import static io.github.theangrydev.thinhttpclient.core.Response.response;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 public class ApacheHttpClient implements HttpClient {
 
@@ -50,7 +52,7 @@ public class ApacheHttpClient implements HttpClient {
 
     @Override
     public Response execute(Request request) throws IOException {
-        HttpRequest apacheRequest = new HttpRequest(request.url, request.method, request.body);
+        HttpRequest apacheRequest = HttpRequest.httpRequest(request.url, request.method, request.body, request.header(CONTENT_TYPE));
         try (CloseableHttpResponse apacheResponse = httpClient.execute(apacheRequest)) {
             return adaptResponse(apacheResponse);
         }
@@ -90,10 +92,17 @@ public class ApacheHttpClient implements HttpClient {
 
         private final Method method;
 
-        HttpRequest(URL url, Method method, String body) {
+        private HttpRequest(Method method) {
             this.method = method;
-            setURI(URI.create(url.toExternalForm()));
-            setEntity(new StringEntity(body, UTF_8));
+        }
+
+        public static HttpRequest httpRequest(URL url, Method method, String body, String contentType) {
+            HttpRequest httpRequest = new HttpRequest(method);
+            httpRequest.setURI(URI.create(url.toExternalForm()));
+            if (!body.isEmpty()) {
+                httpRequest.setEntity(new StringEntity(body, ContentType.parse(contentType)));
+            }
+            return httpRequest;
         }
 
         @Override

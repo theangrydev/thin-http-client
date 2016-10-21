@@ -17,33 +17,6 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
-import java.util.List;
-
-public final class Response {
-    private final Headers headers;
-    public final int status;
-    public final String body;
-
-    private Response(Headers headers, int status, String body) {
-        this.headers = headers;
-        this.status = status;
-        this.body = body;
-    }
-
-    public static Response response(Headers headers, int status, String body) {
-        return new Response(headers, status, body);
-    }
-
-    public String header(String name) {
-        return headers.value(name);
-    }
-
-    public List<String> headerValues(String name) {
-        return headers.values(name);
-    }
-
-    @Override
-    public String toString() {
-        return body;
-    }
+public class HeaderName {
+    public static final String CONTENT_TYPE = "Content-Type";
 }

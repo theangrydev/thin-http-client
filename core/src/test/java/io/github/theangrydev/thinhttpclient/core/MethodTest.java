@@ -17,15 +17,30 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.assertj.core.api.WithAssertions;
 import org.junit.Test;
+
+import static io.github.theangrydev.thinhttpclient.core.Method.*;
+
 
 public class MethodTest implements WithAssertions {
 
     @Test
     public void methodNamesMatchTheHttpSpecification() {
-        assertThat(Method.values())
-                .extracting(String::valueOf)
-                .containsExactly("OPTIONS", "GET", "HEAD", "POST", "PUT", "DELETE", "TRACE", "CONNECT", "PATCH");
+        assertThat(OPTIONS).hasToString("OPTIONS");
+        assertThat(GET).hasToString("GET");
+        assertThat(HEAD).hasToString("HEAD");
+        assertThat(POST).hasToString("POST");
+        assertThat(PUT).hasToString("PUT");
+        assertThat(DELETE).hasToString("DELETE");
+        assertThat(TRACE).hasToString("TRACE");
+        assertThat(CONNECT).hasToString("CONNECT");
+        assertThat(PATCH).hasToString("PATCH");
+    }
+
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.forClass(Method.class).verify();
     }
 }

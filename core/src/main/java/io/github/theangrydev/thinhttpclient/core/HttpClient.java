@@ -17,8 +17,6 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
-import io.github.theangrydev.thinhttpclient.core.Request.RequestBuilder;
-
 import java.io.Closeable;
 import java.io.IOException;
 
