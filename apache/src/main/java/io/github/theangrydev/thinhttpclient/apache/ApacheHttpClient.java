@@ -21,6 +21,8 @@ import io.github.theangrydev.thinhttpclient.core.*;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -52,7 +54,7 @@ public class ApacheHttpClient implements HttpClient {
 
     @Override
     public Response execute(Request request) throws IOException {
-        HttpRequest apacheRequest = HttpRequest.httpRequest(request.url, request.method, request.body, request.header(CONTENT_TYPE));
+        HttpUriRequest apacheRequest = adaptRequest(request);
         try (CloseableHttpResponse apacheResponse = httpClient.execute(apacheRequest)) {
             return adaptResponse(apacheResponse);
         }
@@ -61,6 +63,15 @@ public class ApacheHttpClient implements HttpClient {
     @Override
     public void close() throws IOException {
         httpClient.close();
+    }
+
+    private HttpUriRequest adaptRequest(Request request) {
+        if (request.method.hasBody) {
+            String header = request.header(CONTENT_TYPE);
+            return HttpRequestWithEntity.httpRequestWithEntity(request.url, request.method, request.body, header);
+        } else {
+            return HttpRequestWithoutEntity.httpRequestWithoutEntity(request.url, request.method);
+        }
     }
 
     private Response adaptResponse(CloseableHttpResponse apacheResponse) throws IOException {
@@ -88,16 +99,34 @@ public class ApacheHttpClient implements HttpClient {
         }
     }
 
-    private static final class HttpRequest extends HttpEntityEnclosingRequestBase {
-
+    private static final class HttpRequestWithoutEntity extends HttpRequestBase {
         private final Method method;
 
-        private HttpRequest(Method method) {
+        private HttpRequestWithoutEntity(Method method) {
             this.method = method;
         }
 
-        public static HttpRequest httpRequest(URL url, Method method, String body, String contentType) {
-            HttpRequest httpRequest = new HttpRequest(method);
+        static HttpRequestWithoutEntity httpRequestWithoutEntity(URL url, Method method) {
+            HttpRequestWithoutEntity httpRequest = new HttpRequestWithoutEntity(method);
+            httpRequest.setURI(URI.create(url.toExternalForm()));
+            return httpRequest;
+        }
+
+        @Override
+        public String getMethod() {
+            return method.name;
+        }
+    }
+
+    private static final class HttpRequestWithEntity extends HttpEntityEnclosingRequestBase {
+        private final Method method;
+
+        private HttpRequestWithEntity(Method method) {
+            this.method = method;
+        }
+
+        static HttpRequestWithEntity httpRequestWithEntity(URL url, Method method, String body, String contentType) {
+            HttpRequestWithEntity httpRequest = new HttpRequestWithEntity(method);
             httpRequest.setURI(URI.create(url.toExternalForm()));
             if (!body.isEmpty()) {
                 httpRequest.setEntity(new StringEntity(body, ContentType.parse(contentType)));
@@ -107,7 +136,7 @@ public class ApacheHttpClient implements HttpClient {
 
         @Override
         public String getMethod() {
-            return method.toString();
+            return method.name;
         }
     }
 }

@@ -17,7 +17,17 @@
  */
 package io.github.theangrydev.thinhttpclient.core;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+
+import static java.lang.String.format;
+import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.unmodifiableMap;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 /**
  * This enumerates the possible HTTP/1.1 Method tokens according to RFC 2616 and RFC 5789.
@@ -30,57 +40,67 @@ public final class Method {
     /**
      * @see <a href="https://tools.ietf.org/html/rfc2616#section-9.2">RFC 2616 HTTP/1.1 9.2 OPTIONS</a>
      */
-    public static final Method OPTIONS = Method.method("OPTIONS");
+    public static final Method OPTIONS = new Method("OPTIONS", false);
 
     /**
      * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.3">RFC 2616 HTTP/1.1 9.3 GET</a>
      */
-    public static final Method GET = Method.method("GET");
+    public static final Method GET = new Method("GET", false);
 
     /**
      * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.4">RFC 2616 HTTP/1.1 9.4 HEAD</a>
      */
-    public static final Method HEAD = Method.method("HEAD");
+    public static final Method HEAD = new Method("HEAD", false);
 
     /**
      * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.5">RFC 2616 HTTP/1.1 9.5 POST</a>
      */
-    public static final Method POST = Method.method("POST");
+    public static final Method POST = new Method("POST", true);
 
     /**
      * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.6">RFC 2616 HTTP/1.1 9.6 PUT</a>
      */
-    public static final Method PUT = Method.method("PUT");
+    public static final Method PUT = new Method("PUT", true);
 
     /**
      * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.7">RFC 2616 HTTP/1.1 9.7 DELETE</a>
      */
-    public static final Method DELETE = Method.method("DELETE");
+    public static final Method DELETE = new Method("DELETE", false);
 
     /**
      * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.8">RFC 2616 HTTP/1.1 9.8 TRACE</a>
      */
-    public static final Method TRACE = Method.method("TRACE");
+    public static final Method TRACE = new Method("TRACE", false);
 
     /**
      * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.9">RFC 2616 HTTP/1.1 9.9 CONNECT</a>
      */
-    public static final Method CONNECT = Method.method("CONNECT");
+    public static final Method CONNECT = new Method("CONNECT", false);
 
     /**
      * @see <a href="https://tools.ietf.org/html/rfc5789">RFC 5789 PATCH Method for HTTP</a>
      */
-    public static final Method PATCH = Method.method("PATCH");
+    public static final Method PATCH = new Method("PATCH", true);
 
 
-    private final String name;
+    private static final List<Method> KNOWN_METHODS = unmodifiableList(asList(OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT, PATCH));
+    private static final Map<String, Method> KNOWN_METHODS_BY_NAME = unmodifiableMap(KNOWN_METHODS.stream().collect(toMap(method -> method.name, identity())));
 
-    private Method(String name) {
+    public final String name;
+    public final boolean hasBody;
+
+    private Method(String name, boolean hasBody) {
         this.name = name;
+        this.hasBody = hasBody;
+    }
+
+    public static Method method(String name, boolean hasBody) {
+        return new Method(name, hasBody);
     }
 
     public static Method method(String name) {
-        return new Method(name);
+        return Optional.ofNullable(KNOWN_METHODS_BY_NAME.get(name))
+                .orElseThrow(() -> new IllegalArgumentException(format("Unrecognised method '%s', please provide the boolean argument to say whether the method should have a body", name)));
     }
 
     @Override
@@ -97,11 +117,12 @@ public final class Method {
             return false;
         }
         Method method = (Method) other;
-        return Objects.equals(name, method.name);
+        return hasBody == method.hasBody &&
+                Objects.equals(name, method.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(name, hasBody);
     }
 }

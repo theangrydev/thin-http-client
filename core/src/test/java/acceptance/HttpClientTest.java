@@ -60,7 +60,7 @@ public abstract class HttpClientTest extends TestState implements WithAssertions
 
         verify(getRequestedFor(urlPathEqualTo("/test"))
                 .withRequestBody(equalTo(""))
-                .withHeader("Content-Length", equalTo("0")));
+                .withoutHeader("Content-Length"));
     }
 
     /**

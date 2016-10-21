@@ -27,6 +27,18 @@ import static io.github.theangrydev.thinhttpclient.core.Method.*;
 public class MethodTest implements WithAssertions {
 
     @Test
+    public void lookupByMethodName() {
+        assertThat(Method.method("GET")).isEqualTo(GET);
+        assertThat(Method.method("HEAD")).isEqualTo(HEAD);
+        assertThat(Method.method("POST")).isEqualTo(POST);
+        assertThat(Method.method("PUT")).isEqualTo(PUT);
+        assertThat(Method.method("DELETE")).isEqualTo(DELETE);
+        assertThat(Method.method("TRACE")).isEqualTo(TRACE);
+        assertThat(Method.method("CONNECT")).isEqualTo(CONNECT);
+        assertThat(Method.method("PATCH")).isEqualTo(PATCH);
+    }
+
+    @Test
     public void methodNamesMatchTheHttpSpecification() {
         assertThat(OPTIONS).hasToString("OPTIONS");
         assertThat(GET).hasToString("GET");

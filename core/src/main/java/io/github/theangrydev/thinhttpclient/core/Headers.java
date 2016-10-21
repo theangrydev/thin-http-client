@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import static java.lang.System.lineSeparator;
 import static java.util.Collections.emptyList;
@@ -63,6 +65,10 @@ public final class Headers implements Iterable<Header> {
     @Override
     public Iterator<Header> iterator() {
         return headers.iterator();
+    }
+
+    public Stream<Header> stream() {
+        return StreamSupport.stream(spliterator(), false);
     }
 
     @Override
