@@ -52,7 +52,12 @@ public final class Request {
      */
     public final String body;
 
-    private final Headers headers;
+    /**
+     * The HTTP header fields that will be sent.
+     *
+     * @see <a href="https://tools.ietf.org/html/rfc2616#section-4.2">RFC 2616 HTTP/1.1 4.2 Message Headers</a>
+     */
+    public final Headers headers;
 
     public String header(String name) {
         return headers.value(name);

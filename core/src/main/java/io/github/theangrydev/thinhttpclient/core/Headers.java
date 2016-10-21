@@ -26,6 +26,11 @@ import static java.lang.System.lineSeparator;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.*;
 
+/**
+ * HTTP header fields.
+ *
+ * @see <a href="https://tools.ietf.org/html/rfc2616#section-4.2">RFC 2616 HTTP/1.1 4.2 Message Headers</a>
+ */
 public final class Headers implements Iterable<Header> {
 
     private final List<Header> headers;
