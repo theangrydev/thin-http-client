@@ -25,6 +25,7 @@ import java.util.List;
 
 import static io.github.theangrydev.thinhttpclient.core.HeaderName.CONTENT_TYPE;
 import static io.github.theangrydev.thinhttpclient.core.Headers.headers;
+import static io.github.theangrydev.thinhttpclient.core.Request.request;
 import static java.lang.String.format;
 
 /**
@@ -134,7 +135,7 @@ public class RequestBuilder {
         checkFieldWasSet(method, "Method");
         checkFieldWasSet(body, "Body");
         checkBodyIsEmptyForMethodsWithNoBody();
-        return Request.request(url, method, body, headers(headers));
+        return request(url, method, body, headers(headers));
     }
 
     private void checkBodyIsEmptyForMethodsWithNoBody() {

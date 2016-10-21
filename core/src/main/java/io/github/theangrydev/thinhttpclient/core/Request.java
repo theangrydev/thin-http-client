@@ -102,7 +102,7 @@ public final class Request {
         this.headers = headers;
     }
 
-    public static Request request(URL url, Method method, String body, Headers headers) {
+    static Request request(URL url, Method method, String body, Headers headers) {
         return new Request(url, method, body, headers);
     }
 
