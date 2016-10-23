@@ -28,8 +28,8 @@
 
     <modules>
         <module>api</module>
-        <module>apache-driver</module>
-        <module>okhttp-driver</module>
+        <module>apache-adapter</module>
+        <module>okhttp-adapter</module>
     </modules>
 
     <name>thin-http-client</name>
