@@ -28,7 +28,7 @@
         <artifactId>thin-http-client</artifactId>
         <version>0.1.1-SNAPSHOT</version>
     </parent>
-    <artifactId>okhttp-driver</artifactId>
+    <artifactId>okhttp-adapter</artifactId>
 
     <dependencies>
         <!-- Compile dependencies -->
