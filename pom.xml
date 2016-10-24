@@ -27,9 +27,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>core</module>
-        <module>apache</module>
-        <module>okhttp</module>
+        <module>api</module>
+        <module>apache-adapter</module>
+        <module>okhttp-adapter</module>
     </modules>
 
     <name>thin-http-client</name>
