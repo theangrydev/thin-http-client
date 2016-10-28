@@ -38,6 +38,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.http.RequestMethod.fromString;
 import static com.github.tomakehurst.wiremock.matching.RequestPatternBuilder.newRequestPattern;
 import static io.github.theangrydev.thinhttpclient.api.MediaType.APPLICATION_XML;
+import static io.github.theangrydev.thinhttpclient.api.MediaType.TEXT_PLAIN;
 import static io.github.theangrydev.thinhttpclient.api.Method.method;
 import static java.nio.charset.StandardCharsets.UTF_16;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -59,6 +60,7 @@ public abstract class HttpClientTest extends TestState implements WithAssertions
         this.httpClient = httpClient;
     }
 
+    //TODO: link to spec
     @Table({
         @Row("OPTIONS"),
         @Row("GET"),
@@ -73,6 +75,22 @@ public abstract class HttpClientTest extends TestState implements WithAssertions
         verify(newRequestPattern(fromString(methodName), urlPathEqualTo("/test"))
                 .withRequestBody(equalTo(""))
                 .withoutHeader("Content-Length"));
+    }
+
+    //TODO: link to spec
+    @Table({
+        @Row("POST"),
+        @Row("PUT"),
+        @Row("PATCH")
+    })
+    @Test
+    public void methodsWithBodySpecifyContentLength(String methodName) throws IOException {
+        String body = "body";
+        httpClient.execute(Request.builder().method(method(methodName)).url(baseUrl() + "/test")
+                .body(body, TEXT_PLAIN, UTF_8));
+
+        verify(newRequestPattern(fromString(methodName), urlPathEqualTo("/test"))
+                .withHeader("Content-Length", equalTo(String.valueOf(body.length()))));
     }
 
     /**
