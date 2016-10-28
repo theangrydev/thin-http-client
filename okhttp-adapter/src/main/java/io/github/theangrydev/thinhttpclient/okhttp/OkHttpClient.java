@@ -31,6 +31,7 @@ import java.util.stream.Stream;
 
 import static io.github.theangrydev.thinhttpclient.api.Header.header;
 import static io.github.theangrydev.thinhttpclient.api.HeaderName.CONTENT_TYPE;
+import static io.github.theangrydev.thinhttpclient.api.Method.HEAD;
 import static java.util.stream.Collectors.toList;
 
 public class OkHttpClient implements HttpClient {
@@ -60,7 +61,14 @@ public class OkHttpClient implements HttpClient {
                 .headers(adaptHeaders(request.headers))
                 .build();
         okhttp3.Response okHttpResponse = httpClient.newCall(okHttpRequest).execute();
-        return Response.response(adaptHeaders(okHttpResponse.headers()), okHttpResponse.code(), okHttpResponse.body().string());
+        return Response.response(adaptHeaders(okHttpResponse.headers()), okHttpResponse.code(), adaptBody(request, okHttpResponse));
+    }
+
+    private String adaptBody(Request request, okhttp3.Response okHttpResponse) throws IOException {
+        if (HEAD.equals(request.method)) {
+            return "";
+        }
+        return okHttpResponse.body().string();
     }
 
     private RequestBody adaptBody(Request request, String contentType) {

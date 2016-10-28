@@ -60,11 +60,11 @@ public abstract class HttpClientTest extends TestState implements WithAssertions
     }
 
     @Table({
+        @Row("OPTIONS"),
         @Row("GET"),
         @Row("HEAD"),
         @Row("DELETE"),
-        @Row("TRACE"),
-        @Row("CONNECT")
+        @Row("TRACE")
     })
     @Test
     public void methodsWithoutBodyDoNotSpecifyContentLength(String methodName) throws IOException {
