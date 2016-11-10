@@ -10,7 +10,7 @@
  *  http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an "AS IS"BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -43,37 +43,37 @@ public final class Method {
     public static final Method OPTIONS = new Method("OPTIONS", false);
 
     /**
-     * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.3">RFC 2616 HTTP/1.1 9.3 GET</a>
+     * @see <a href="https://tools.ietf.org/html/rfc2616#section-9.3">RFC 2616 HTTP/1.1 9.3 GET</a>
      */
     public static final Method GET = new Method("GET", false);
 
     /**
-     * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.4">RFC 2616 HTTP/1.1 9.4 HEAD</a>
+     * @see <a href="https://tools.ietf.org/html/rfc2616#section-9.4">RFC 2616 HTTP/1.1 9.4 HEAD</a>
      */
     public static final Method HEAD = new Method("HEAD", false);
 
     /**
-     * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.5">RFC 2616 HTTP/1.1 9.5 POST</a>
+     * @see <a href="https://tools.ietf.org/html/rfc2616#section-9.5">RFC 2616 HTTP/1.1 9.5 POST</a>
      */
     public static final Method POST = new Method("POST", true);
 
     /**
-     * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.6">RFC 2616 HTTP/1.1 9.6 PUT</a>
+     * @see <a href="https://tools.ietf.org/html/rfc2616#section-9.6">RFC 2616 HTTP/1.1 9.6 PUT</a>
      */
     public static final Method PUT = new Method("PUT", true);
 
     /**
-     * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.7">RFC 2616 HTTP/1.1 9.7 DELETE</a>
+     * @see <a href="https://tools.ietf.org/html/rfc2616#section-9.7">RFC 2616 HTTP/1.1 9.7 DELETE</a>
      */
     public static final Method DELETE = new Method("DELETE", false);
 
     /**
-     * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.8">RFC 2616 HTTP/1.1 9.8 TRACE</a>
+     * @see <a href="https://tools.ietf.org/html/rfc2616#section-9.8">RFC 2616 HTTP/1.1 9.8 TRACE</a>
      */
     public static final Method TRACE = new Method("TRACE", false);
 
     /**
-     * @see <a href=" https://tools.ietf.org/html/rfc2616#section-9.9">RFC 2616 HTTP/1.1 9.9 CONNECT</a>
+     * @see <a href="https://tools.ietf.org/html/rfc2616#section-9.9">RFC 2616 HTTP/1.1 9.9 CONNECT</a>
      */
     public static final Method CONNECT = new Method("CONNECT", false);
 
