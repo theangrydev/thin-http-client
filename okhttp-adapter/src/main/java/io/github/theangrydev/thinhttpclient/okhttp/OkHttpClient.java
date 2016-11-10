@@ -34,6 +34,7 @@ import static io.github.theangrydev.thinhttpclient.api.HeaderName.CONTENT_TYPE;
 import static io.github.theangrydev.thinhttpclient.api.Method.HEAD;
 import static java.util.stream.Collectors.toList;
 
+@SuppressWarnings("PMD") //TODO: fix
 public class OkHttpClient implements HttpClient {
 
     private final okhttp3.OkHttpClient httpClient;
