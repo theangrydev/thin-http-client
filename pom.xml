@@ -23,7 +23,7 @@
 
     <groupId>io.github.theangrydev.thinhttpclient</groupId>
     <artifactId>thin-http-client</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.2.0</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -40,7 +40,7 @@
         <connection>scm:git:https://github.com/theangrydev/thin-http-client.git</connection>
         <developerConnection>scm:git:https://github.com/theangrydev/thin-http-client.git</developerConnection>
         <url>https://github.com/theangrydev/thin-http-client.git</url>
-        <tag>HEAD</tag>
+        <tag>thin-http-client-0.2.0</tag>
     </scm>
 
     <licenses>
