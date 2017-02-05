@@ -43,7 +43,8 @@ public class OkHttpClient implements HttpClient {
         this.httpClient = httpClient;
     }
 
-    // TODO: if a custom okhttp3.OkHttpClient is passed in, the dispatcher and connection pool may be shared amongst many
+    // TODO https://github.com/theangrydev/thin-http-client/issues/1
+    // if a custom okhttp3.OkHttpClient is passed in, the dispatcher and connection pool may be shared amongst many
     // clients and so this class cannot be responsible for closing them
     public static HttpClient okHttpClient() {
         okhttp3.OkHttpClient httpClient = new okhttp3.OkHttpClient.Builder()
