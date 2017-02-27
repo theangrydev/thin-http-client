@@ -185,6 +185,34 @@ public final class Request {
         }
 
         /**
+         * Add a HTTP header with the given name and value.
+         * It is possible to add multiple headers with the same name.
+         *
+         * @param name The name of the header to remove.
+         * @return This {@link RequestBuilder}.
+         * @see <a href="https://tools.ietf.org/html/rfc2616#section-4.2">RFC 2616 HTTP/1.1 4.2 Message Headers</a>
+         */
+        public RequestBuilder header(String name, String value) {
+            headers.add(Header.header(name, value));
+            return this;
+        }
+
+        /**
+         * Adds all the given HTTP headers.
+         * It is possible to add multiple headers with the same name.
+         *
+         * @param headers The {@link Headers} to add.
+         * @return This {@link RequestBuilder}.
+         * @see <a href="https://tools.ietf.org/html/rfc2616#section-4.2">RFC 2616 HTTP/1.1 4.2 Message Headers</a>
+         */
+        public RequestBuilder headers(Headers headers) {
+            for (Header header : headers) {
+                this.headers.add(header);
+            }
+            return this;
+        }
+
+        /**
          * Set the URL after parsing the {@code url} as a {@link URL}.
          *
          * @param url The URL to set
@@ -222,30 +250,15 @@ public final class Request {
             return body(body).header(CONTENT_TYPE, mediaType + "; charset=" + charset);
         }
 
+        /**
+         * Set the request body to the empty {@link String} and remove the Content-Type header.
+         *
+         * @return This {@link RequestBuilder}.
+         * @see <a href="https://tools.ietf.org/html/rfc2616#section-4.3">RFC 2616 HTTP/1.1 4.3 Message Body</a>
+         * @see HeaderName#CONTENT_TYPE
+         */
         public RequestBuilder noBody() {
             return body("").removeHeader(CONTENT_TYPE);
-        }
-
-        private RequestBuilder removeHeader(String headerName) {
-            headers.removeIf(header -> headerName.equals(header.name));
-            return this;
-        }
-
-        private RequestBuilder body(String body) {
-            this.body = body;
-            return this;
-        }
-
-        public RequestBuilder header(String name, String value) {
-            headers.add(Header.header(name, value));
-            return this;
-        }
-
-        public RequestBuilder headers(Headers headers) {
-            for (Header header : headers) {
-                this.headers.add(header);
-            }
-            return this;
         }
 
         /**
@@ -261,6 +274,16 @@ public final class Request {
             checkFieldWasSet(body, "Body");
             checkBodyIsEmptyForMethodsWithNoBody();
             return request(url, method, body, Headers.headers(headers));
+        }
+
+        private RequestBuilder body(String body) {
+            this.body = body;
+            return this;
+        }
+
+        private RequestBuilder removeHeader(String name) {
+            headers.removeIf(header -> name.equals(header.name));
+            return this;
         }
 
         private void checkBodyIsEmptyForMethodsWithNoBody() {
