@@ -33,6 +33,7 @@
     <rule ref="rulesets/java/controversial.xml">
         <exclude name="OnlyOneReturn"/><!-- Multiple returns can avoid arrow code and aid readability -->
         <exclude name="AtLeastOneConstructor"/><!-- This is pointless if an object does not need to set up anything -->
+        <exclude name="DataflowAnomalyAnalysis"/><!-- Too many false positives -->
     </rule>
     <rule ref="rulesets/java/coupling.xml">
         <exclude name="LoosePackageCoupling"/><!-- This rule would be good but you can only configure class excludes not package excludes -->

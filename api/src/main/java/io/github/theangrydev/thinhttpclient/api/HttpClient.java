@@ -23,7 +23,7 @@ import java.io.IOException;
 public interface HttpClient extends Closeable {
     Response execute(Request request) throws IOException;
 
-    default Response execute(RequestBuilder requestBuilder) throws IOException {
+    default Response execute(Request.RequestBuilder requestBuilder) throws IOException {
         return execute(requestBuilder.build());
     }
 }

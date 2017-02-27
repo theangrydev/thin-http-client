@@ -17,17 +17,32 @@
  */
 package io.github.theangrydev.thinhttpclient.api;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.assertj.core.api.WithAssertions;
 import org.junit.Test;
 
 import static io.github.theangrydev.thinhttpclient.api.Header.header;
 import static io.github.theangrydev.thinhttpclient.api.Headers.headers;
+import static java.lang.System.lineSeparator;
 
 public class HeadersTest implements WithAssertions {
 
+    private static final Header HEADER_1 = header("x", "1");
+    private static final Header HEADER_2 = header("y", "3");
+
+    @Test
+    public void equalsContract() {
+        EqualsVerifier.forClass(Headers.class)
+                .withPrefabValues(Header.class, HEADER_1, HEADER_2)
+                .verify();
+    }
+
     @Test
     public void toStringPrintsHeadersLineByLine() {
-        assertThat(headers(header("name1", "value1"), header("name2", "value2")))
-                .hasToString("name1: value1" + System.lineSeparator() + "name2: value2");
+        Headers headers = headers(
+                header("name1", "value1"),
+                header("name2", "value2"));
+
+        assertThat(headers).hasToString("name1: value1" + lineSeparator() + "name2: value2");
     }
 }

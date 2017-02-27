@@ -17,10 +17,7 @@
  */
 package io.github.theangrydev.thinhttpclient.api;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -74,5 +71,23 @@ public final class Headers implements Iterable<Header> {
     @Override
     public String toString() {
         return headers.stream().map(Header::toString).collect(joining(lineSeparator()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || getClass() != other.getClass()) {
+            return false;
+        }
+        Headers headers = (Headers) other;
+        return Objects.equals(this.headers, headers.headers) &&
+                Objects.equals(headerValues, headers.headerValues);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(headers, headerValues);
     }
 }

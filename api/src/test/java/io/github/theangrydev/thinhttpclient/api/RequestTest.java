@@ -18,6 +18,7 @@
 package io.github.theangrydev.thinhttpclient.api;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
+import org.assertj.core.api.WithAssertions;
 import org.junit.Test;
 
 import java.net.MalformedURLException;
@@ -25,8 +26,9 @@ import java.net.URL;
 
 import static io.github.theangrydev.thinhttpclient.api.Header.header;
 import static io.github.theangrydev.thinhttpclient.api.Headers.headers;
+import static io.github.theangrydev.thinhttpclient.api.MediaType.APPLICATION_JSON;
 
-public class RequestTest {
+public class RequestTest implements WithAssertions {
 
     private static final Headers HEADERS_1 = headers(header("a", "1"));
     private static final Headers HEADERS_2 = headers(header("b", "2"));
@@ -36,12 +38,23 @@ public class RequestTest {
     private static final URL URL_2 = url("http://www.bbc.co.uk/");
 
     @Test
+    public void modifyRequest() {
+        Request request = someRequest();
+
+        assertThat(request.modify().build()).isEqualTo(request);
+    }
+
+    @Test
     public void equalsContract() {
         EqualsVerifier.forClass(Request.class)
                 .withPrefabValues(Method.class, METHOD_1, METHOD_2)
                 .withPrefabValues(Headers.class, HEADERS_1, HEADERS_2)
                 .withPrefabValues(URL.class, URL_1, URL_2)
                 .verify();
+    }
+
+    private Request someRequest() {
+        return Request.post().header("a", "1").header("b", "2").body("{\"x\": 2}", APPLICATION_JSON).url(URL_1).build();
     }
 
     private static URL url(String url) {
