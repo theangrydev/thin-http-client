@@ -62,7 +62,7 @@
         <java.version>1.8</java.version>
         <skipTests>false</skipTests>
         <junit.version>4.12</junit.version>
-        <jackson.version>2.8.1</jackson.version>
+        <jackson.version>2.8.11.1</jackson.version>
         <sonar.language>java</sonar.language>
     </properties>
 
